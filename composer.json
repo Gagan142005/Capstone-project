@@ -1,0 +1,40 @@
+{
+    "name": "globentech/laboratory-order-management",
+    "description": "Laboratory Order Management System - Phase 3 Prototype",
+    "type": "project",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Bhavya Bhavya",
+            "email": "bhavya@sait.ca"
+        },
+        {
+            "name": "Evan Di Placido",
+            "email": "evan.diplacido@sait.ca"
+        },
+        {
+            "name": "Ahmad Fakhry",
+            "email": "ahmad.fakhry@sait.ca"
+        },
+        {
+            "name": "Gaganpreet Kaur",
+            "email": "gaganpreet.kaur@sait.ca"
+        },
+        {
+            "name": "Antonio Macedo",
+            "email": "antonio.macedo@sait.ca"
+        },
+        {
+            "name": "Justice Mazerolle",
+            "email": "justice.mazerolle@sait.ca"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "GlobenTech\\": "classes/"
+        }
+    }
+}

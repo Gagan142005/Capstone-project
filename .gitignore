@@ -1,0 +1,34 @@
+# Dependencies
+vendor/
+
+# Environmental variables
+*.env
+.env*
+
+# Configuration
+config/database.php
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Error logs
+error_log.txt
+error_log
+
+# Extensions
+.VSCodeCounter

@@ -1,0 +1,163 @@
+<?php
+require_once 'config/database.php';
+require_once 'classes/User.php';
+
+$error = '';
+$success = '';
+$user = new User();
+
+// Redirect if already logged in
+if ($user->isLoggedIn()) {
+    header('Location: dashboard.php');
+    exit;
+}
+
+// Handle registration form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
+    $fullName = filter_input(INPUT_POST, 'full_name', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirm_password'];
+    $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+    $companyName = filter_input(INPUT_POST, 'company_name', FILTER_SANITIZE_STRING);
+    $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
+
+    // Validation
+    if (empty($fullName) || empty($email) || empty($password)) {
+        $error = 'Please fill in all required fields';
+    } elseif ($password !== $confirmPassword) {
+        $error = 'Passwords do not match';
+    } elseif (strlen($password) < 6) {
+        $error = 'Password must be at least 6 characters long';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = 'Invalid email format';
+    } else {
+        // Attempt registration
+        if ($user->register($fullName, $email, $password, $phone, $companyName, $address)) {
+            $success = 'Registration successful! You can now login.';
+        } else {
+            $error = 'Email already exists or registration failed';
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - <?php echo APP_NAME; ?></title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box register-box">
+            <div class="logo">
+                <h1><?php echo APP_NAME; ?></h1>
+                <p>Create Your Account</p>
+            </div>
+
+            <?php if ($error): ?>
+                <div class="alert alert-error">
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($success): ?>
+                <div class="alert alert-success">
+                    <?php echo htmlspecialchars($success); ?>
+                    <br><a href="index.php">Click here to login</a>
+                </div>
+            <?php endif; ?>
+
+            <form method="POST" action="" class="login-form">
+                <div class="form-group">
+                    <label for="full_name">Full Name *</label>
+                    <input 
+                        type="text" 
+                        id="full_name" 
+                        name="full_name" 
+                        required 
+                        placeholder="Enter your full name"
+                        value="<?php echo isset($_POST['full_name']) ? htmlspecialchars($_POST['full_name']) : ''; ?>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        required 
+                        placeholder="Enter your email"
+                        value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        placeholder="Enter your phone number"
+                        value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="company_name">Company Name</label>
+                    <input 
+                        type="text" 
+                        id="company_name" 
+                        name="company_name" 
+                        placeholder="Enter your company name"
+                        value="<?php echo isset($_POST['company_name']) ? htmlspecialchars($_POST['company_name']) : ''; ?>"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea 
+                        id="address" 
+                        name="address" 
+                        rows="3" 
+                        placeholder="Enter your address"
+                    ><?php echo isset($_POST['address']) ? htmlspecialchars($_POST['address']) : ''; ?></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required 
+                        placeholder="Enter password (min. 6 characters)"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password *</label>
+                    <input 
+                        type="password" 
+                        id="confirm_password" 
+                        name="confirm_password" 
+                        required 
+                        placeholder="Confirm your password"
+                    >
+                </div>
+
+                <button type="submit" name="register" class="btn btn-primary">Register</button>
+            </form>
+
+            <div class="login-footer">
+                <p>Already have an account? <a href="index.php">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
