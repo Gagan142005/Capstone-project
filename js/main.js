@@ -65,22 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, index * 100);
     });
 
-    // Loading state for buttons
-    const buttons = document.querySelectorAll('button[type="submit"]');
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            if (this.form.checkValidity()) {
-                this.disabled = true;
-                this.textContent = 'Processing...';
-                
-                setTimeout(() => {
-                    this.disabled = false;
-                    this.textContent = this.getAttribute('data-text') || 'Submit';
-                }, 3000);
-            }
-        });
-    });
-
     console.log('GlobenTech Laboratory Order Management System - Initialized');
 });
 
