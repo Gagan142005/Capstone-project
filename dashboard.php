@@ -62,7 +62,7 @@ $equipment = new Equipment();
                     <div class="card-stats">
                         <span class="stat"><?php echo $activeCount; ?> Active</span>
                     </div>
-                    <a href="my-orders.php" class="btn btn-secondary">View Orders</a>
+                    <a href="my-orders.php" class="btn btn-primary">View Orders</a>
                 </div>
 
                 <div class="dashboard-card">
