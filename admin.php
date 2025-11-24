@@ -20,6 +20,23 @@ $userId = $_SESSION['user_id'];
 $order = new Order();
 $equipment = new Equipment();
 
+// Handle approve/reject actions
+$message = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['approve_order'])) {
+        $orderId = intval($_POST['order_id']);
+        if ($order->approveOrder($orderId, $userId)) {
+            $message = 'Order approved successfully';
+        }
+    } elseif (isset($_POST['reject_order'])) {
+        $orderId = intval($_POST['order_id']);
+        $reason = trim($_POST['rejection_reason'] ?? 'No reason provided');
+        if ($order->rejectOrder($orderId, $reason)) {
+            $message = 'Order rejected';
+        }
+    }
+}
+
 // Get current tab
 $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
 ?>
@@ -64,12 +81,17 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                     <h1>Pending Approvals</h1>
                     <p class="section-desc">Review and approve or reject submitted orders.</p>
                     
+                    <?php if ($message): ?>
+                        <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
+                    <?php endif; ?>
+                    
                     <div class="admin-table-container">
                         <table class="admin-table">
                             <thead>
                                 <tr>
                                     <th>Order #</th>
                                     <th>Customer</th>
+                                    <th>Company</th>
                                     <th>Submitted</th>
                                     <th>Priority</th>
                                     <th>Samples</th>
@@ -77,23 +99,40 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php 
+                                $pendingOrders = $order->getPendingOrders();
+                                if (empty($pendingOrders)): 
+                                ?>
                                 <tr>
-                                    <td colspan="6" class="empty-state">No pending orders</td>
+                                    <td colspan="7" class="empty-state">No pending orders</td>
                                 </tr>
-                                <!-- Prototype row example (commented out)
-                                <tr>
-                                    <td>ORD-20251124-0001</td>
-                                    <td>Test Customer</td>
-                                    <td>2025-11-24 10:30</td>
-                                    <td><span class="badge badge-standard">Standard</span></td>
-                                    <td>3</td>
-                                    <td class="actions">
-                                        <button class="btn btn-small btn-success">Approve</button>
-                                        <button class="btn btn-small btn-danger">Reject</button>
-                                        <button class="btn btn-small btn-secondary">View</button>
-                                    </td>
-                                </tr>
-                                -->
+                                <?php else: ?>
+                                    <?php foreach ($pendingOrders as $po): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($po['order_number']); ?></td>
+                                        <td><?php echo htmlspecialchars($po['customer_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($po['company_name'] ?? '-'); ?></td>
+                                        <td><?php echo date('Y-m-d H:i', strtotime($po['created_at'])); ?></td>
+                                        <td>
+                                            <span class="badge badge-<?php echo $po['priority']; ?>">
+                                                <?php echo ucfirst($po['priority']); ?>
+                                            </span>
+                                        </td>
+                                        <td><?php echo $po['sample_count']; ?></td>
+                                        <td class="actions">
+                                            <form method="POST" style="display:inline;">
+                                                <input type="hidden" name="order_id" value="<?php echo $po['id']; ?>">
+                                                <button type="submit" name="approve_order" class="btn btn-small btn-success">Approve</button>
+                                            </form>
+                                            <form method="POST" style="display:inline;">
+                                                <input type="hidden" name="order_id" value="<?php echo $po['id']; ?>">
+                                                <input type="hidden" name="rejection_reason" value="Order rejected by administrator">
+                                                <button type="submit" name="reject_order" class="btn btn-small btn-danger">Reject</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

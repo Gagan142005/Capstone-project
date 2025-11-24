@@ -9,7 +9,7 @@
                 <?php if ($_SESSION['user_role'] === 'customer'): ?>
                     <a href="dashboard.php">Dashboard</a>
                     <a href="#">My Orders</a>
-                    <a href="#">New Order</a>
+                    <a href="create-order.php">New Order</a>
                 <?php elseif ($_SESSION['user_role'] === 'technician'): ?>
                     <a href="dashboard.php">Dashboard</a>
                     <a href="#">Samples</a>

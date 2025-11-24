@@ -41,15 +41,22 @@ class Order {
     }
 
     public function updateOrderStatus($orderId, $status) {
-        // Method signature for updating order status
+        $stmt = $this->db->prepare("UPDATE orders SET status = ? WHERE id = ?");
+        return $stmt->execute([$status, $orderId]);
     }
 
     public function approveOrder($orderId, $approvedBy) {
-        // Method signature for approving an order
+        $stmt = $this->db->prepare(
+            "UPDATE orders SET status = 'approved', approved_by = ?, approved_at = NOW() WHERE id = ?"
+        );
+        return $stmt->execute([$approvedBy, $orderId]);
     }
 
     public function rejectOrder($orderId, $rejectionReason) {
-        // Method signature for rejecting an order
+        $stmt = $this->db->prepare(
+            "UPDATE orders SET status = 'rejected', rejection_reason = ? WHERE id = ?"
+        );
+        return $stmt->execute([$rejectionReason, $orderId]);
     }
 
     public function calculateTotalCost($orderId) {
@@ -66,11 +73,28 @@ class Order {
     }
 
     public function getPendingOrders() {
-        // Method signature for retrieving orders pending approval
+        $stmt = $this->db->prepare(
+            "SELECT o.*, u.full_name as customer_name, u.company_name,
+                    (SELECT COUNT(*) FROM samples WHERE order_id = o.id) as sample_count
+             FROM orders o
+             JOIN users u ON o.customer_id = u.id
+             WHERE o.status = 'submitted'
+             ORDER BY o.created_at ASC"
+        );
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     public function getOrdersByStatus($status) {
-        // Method signature for retrieving orders by status
+        $stmt = $this->db->prepare(
+            "SELECT o.*, u.full_name as customer_name
+             FROM orders o
+             JOIN users u ON o.customer_id = u.id
+             WHERE o.status = ?
+             ORDER BY o.created_at DESC"
+        );
+        $stmt->execute([$status]);
+        return $stmt->fetchAll();
     }
 
     public function getAllOrders($limit = 50, $offset = 0) {

@@ -56,7 +56,7 @@ $equipment = new Equipment();
                 <div class="dashboard-card">
                     <h2>Submit New Order</h2>
                     <p>Submit a new chemical testing request</p>
-                    <a href="#" class="btn btn-primary">New Order</a>
+                    <a href="create-order.php" class="btn btn-primary">New Order</a>
                 </div>
 
                 <div class="dashboard-card">
