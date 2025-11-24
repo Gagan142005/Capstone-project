@@ -43,14 +43,26 @@ $equipment = new Equipment();
 
         <?php if ($userRole === 'customer'): ?>
             <!-- Customer Dashboard -->
+            <?php
+            $customerOrders = $order->getOrdersByCustomer($userId);
+            $activeCount = 0;
+            $completedCount = 0;
+            foreach ($customerOrders as $co) {
+                if (in_array($co['status'], ['submitted', 'approved', 'processing'])) {
+                    $activeCount++;
+                } elseif ($co['status'] === 'completed') {
+                    $completedCount++;
+                }
+            }
+            ?>
             <div class="dashboard-grid">
                 <div class="dashboard-card">
                     <h2>My Orders</h2>
                     <p>View and track your chemical compound orders</p>
                     <div class="card-stats">
-                        <span class="stat">0 Active Orders</span>
+                        <span class="stat"><?php echo $activeCount; ?> Active</span>
                     </div>
-                    <a href="#" class="btn btn-secondary">View Orders</a>
+                    <a href="my-orders.php" class="btn btn-secondary">View Orders</a>
                 </div>
 
                 <div class="dashboard-card">
@@ -60,15 +72,68 @@ $equipment = new Equipment();
                 </div>
 
                 <div class="dashboard-card">
-                    <h2>Order History</h2>
+                    <h2>Completed Orders</h2>
                     <p>View completed orders and test results</p>
-                    <a href="#" class="btn btn-secondary">View History</a>
+                    <div class="card-stats">
+                        <span class="stat"><?php echo $completedCount; ?> Completed</span>
+                    </div>
+                    <a href="my-orders.php" class="btn btn-secondary">View History</a>
                 </div>
 
                 <div class="dashboard-card">
                     <h2>Account Settings</h2>
                     <p>Update your profile and preferences</p>
                     <a href="#" class="btn btn-secondary">Settings</a>
+                </div>
+
+                <div class="dashboard-card full-width">
+                    <h2>Recent Orders</h2>
+                    <div class="activity-list">
+                        <?php if (empty($customerOrders)): ?>
+                            <p>No orders yet. <a href="create-order.php">Create your first order</a></p>
+                        <?php else: ?>
+                            <table class="dashboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order #</th>
+                                        <th>Submitted</th>
+                                        <th>Priority</th>
+                                        <th>Samples</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach (array_slice($customerOrders, 0, 5) as $co): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($co['order_number']); ?></td>
+                                        <td><?php echo date('M d, Y', strtotime($co['created_at'])); ?></td>
+                                        <td>
+                                            <span class="priority-badge priority-<?php echo $co['priority']; ?>">
+                                                <?php echo ucfirst($co['priority']); ?>
+                                            </span>
+                                        </td>
+                                        <td><?php echo $co['sample_count']; ?></td>
+                                        <td>
+                                            <span class="priority-badge priority-<?php echo $co['status'] === 'submitted' ? 'priority' : ($co['status'] === 'completed' ? 'standard' : 'standard'); ?>" style="<?php
+                                                if ($co['status'] === 'approved') echo 'background: #d1ecf1; color: #0c5460;';
+                                                elseif ($co['status'] === 'processing') echo 'background: #e7e3ff; color: #5a4fcf;';
+                                                elseif ($co['status'] === 'completed') echo 'background: #d4edda; color: #155724;';
+                                                elseif ($co['status'] === 'rejected') echo 'background: #f8d7da; color: #721c24;';
+                                            ?>">
+                                                <?php echo ucfirst($co['status']); ?>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <?php if (count($customerOrders) > 5): ?>
+                            <div style="margin-top: 15px;">
+                                <a href="my-orders.php" class="btn btn-secondary">View All Orders</a>
+                            </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
 
