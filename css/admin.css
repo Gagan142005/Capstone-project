@@ -1,63 +1,13 @@
 /* Admin Container Layout */
 .admin-container {
-    display: flex;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    gap: 20px;
     min-height: calc(100vh - 200px);
-}
-
-/* Admin Sidebar */
-.admin-sidebar {
-    width: 250px;
-    flex-shrink: 0;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    height: fit-content;
-    position: sticky;
-    top: 20px;
-}
-
-.admin-sidebar h2 {
-    color: #333;
-    font-size: 18px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #667eea;
-}
-
-.admin-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.admin-nav a {
-    display: block;
-    padding: 12px 15px;
-    color: #333;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: all 0.3s;
-    font-weight: 500;
-}
-
-.admin-nav a:hover {
-    background: #f0f0f0;
-    color: #667eea;
-}
-
-.admin-nav a.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
 }
 
 /* Admin Content Area */
 .admin-content {
-    flex: 1;
     background: white;
     border-radius: 10px;
     padding: 30px;
@@ -308,27 +258,6 @@
 }
 
 /* Responsive Design */
-@media (max-width: 992px) {
-    .admin-container {
-        flex-direction: column;
-    }
-
-    .admin-sidebar {
-        width: 100%;
-        position: static;
-    }
-
-    .admin-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .admin-nav a {
-        flex: 1;
-        min-width: 120px;
-        text-align: center;
-    }
-}
 
 @media (max-width: 768px) {
     .admin-content {

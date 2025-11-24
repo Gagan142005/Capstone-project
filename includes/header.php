@@ -3,24 +3,30 @@
         <div class="logo">
             <a href="dashboard.php"><?php echo APP_NAME; ?></a>
         </div>
-        
+
+        <?php
+        // Determine current page and tab for active state
+        $currentPage = basename($_SERVER['PHP_SELF']);
+        $currentTab = isset($_GET['tab']) ? $_GET['tab'] : '';
+        ?>
+
         <nav class="main-nav">
             <?php if (isset($_SESSION['user_role'])): ?>
                 <?php if ($_SESSION['user_role'] === 'customer'): ?>
-                    <a href="dashboard.php">Dashboard</a>
-                    <a href="#">My Orders</a>
-                    <a href="create-order.php">New Order</a>
+                    <a href="dashboard.php" class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
+                    <a href="my-orders.php" class="<?php echo $currentPage === 'my-orders.php' ? 'active' : ''; ?>">My Orders</a>
+                    <a href="create-order.php" class="<?php echo $currentPage === 'create-order.php' ? 'active' : ''; ?>">New Order</a>
                 <?php elseif ($_SESSION['user_role'] === 'technician'): ?>
-                    <a href="dashboard.php">Dashboard</a>
+                    <a href="dashboard.php" class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
                     <a href="#">Samples</a>
                     <a href="#">Equipment</a>
                     <a href="#">Queue</a>
                 <?php elseif ($_SESSION['user_role'] === 'administrator'): ?>
-                    <a href="dashboard.php">Dashboard</a>
-                    <a href="admin.php?tab=approvals">Approvals</a>
-                    <a href="admin.php?tab=users">Users</a>
-                    <a href="admin.php?tab=equipment">Equipment</a>
-                    <a href="admin.php?tab=reports">Reports</a>
+                    <a href="dashboard.php" class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
+                    <a href="admin.php?tab=approvals" class="<?php echo $currentPage === 'admin.php' && $currentTab === 'approvals' ? 'active' : ''; ?>">Approvals</a>
+                    <a href="admin.php?tab=users" class="<?php echo $currentPage === 'admin.php' && $currentTab === 'users' ? 'active' : ''; ?>">Users</a>
+                    <a href="admin.php?tab=equipment" class="<?php echo $currentPage === 'admin.php' && $currentTab === 'equipment' ? 'active' : ''; ?>">Equipment</a>
+                    <a href="admin.php?tab=reports" class="<?php echo $currentPage === 'admin.php' && $currentTab === 'reports' ? 'active' : ''; ?>">Reports</a>
                 <?php endif; ?>
             <?php endif; ?>
         </nav>

@@ -1,15 +1,22 @@
 <?php
 require_once 'config/database.php';
 require_once 'classes/User.php';
+require_once 'classes/Email.php';
 
 $error = '';
 $success = '';
 $user = new User();
+$emailService = new Email();
 
 // Redirect if already logged in
 if ($user->isLoggedIn()) {
     header('Location: dashboard.php');
     exit;
+}
+
+// Check for expired PIN error from verify-email.php
+if (isset($_GET['error']) && $_GET['error'] === 'expired') {
+    $error = 'Verification PIN has expired. Please register again.';
 }
 
 // Handle registration form submission
@@ -32,11 +39,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email format';
     } else {
-        // Attempt registration
-        if ($user->register($fullName, $email, $password, $phone, $companyName, $address)) {
-            $success = 'Registration successful! You can now login.';
+        // Check if email already exists
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        if ($stmt->fetch()) {
+            $error = 'Email already exists';
         } else {
-            $error = 'Email already exists or registration failed';
+            // Generate 6-digit PIN
+            $pin = sprintf('%06d', mt_rand(0, 999999));
+
+            // Store registration data in session
+            $_SESSION['pending_registration'] = [
+                'full_name' => $fullName,
+                'email' => $email,
+                'password' => $password,
+                'phone' => $phone,
+                'company_name' => $companyName,
+                'address' => $address,
+                'pin' => $pin,
+                'created_at' => time()
+            ];
+
+            // Send verification email
+            if ($emailService->sendVerificationPin($email, $fullName, $pin)) {
+                header('Location: verify-email.php');
+                exit;
+            } else {
+                $error = 'Failed to send verification email. Please try again.';
+                unset($_SESSION['pending_registration']);
+            }
         }
     }
 }

@@ -86,27 +86,6 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
     <?php include 'includes/header.php'; ?>
 
     <div class="admin-container">
-        <aside class="admin-sidebar">
-            <h2>Administration</h2>
-            <nav class="admin-nav">
-                <a href="?tab=approvals" class="<?php echo $currentTab === 'approvals' ? 'active' : ''; ?>">
-                    Pending Approvals
-                </a>
-                <a href="?tab=equipment" class="<?php echo $currentTab === 'equipment' ? 'active' : ''; ?>">
-                    Manage Equipment
-                </a>
-                <a href="?tab=samples" class="<?php echo $currentTab === 'samples' ? 'active' : ''; ?>">
-                    Manage Samples
-                </a>
-                <a href="?tab=users" class="<?php echo $currentTab === 'users' ? 'active' : ''; ?>">
-                    Manage Users
-                </a>
-                <a href="?tab=reports" class="<?php echo $currentTab === 'reports' ? 'active' : ''; ?>">
-                    Performance Reports
-                </a>
-            </nav>
-        </aside>
-
         <main class="admin-content">
             <?php if ($currentTab === 'approvals'): ?>
                 <!-- Pending Approvals Section -->

@@ -79,8 +79,17 @@ class Order {
     }
 
     // Order Retrieval Methods
-    public function getOrdersByCustomer($customerId, $limit = 10, $offset = 0) {
-        // Method signature for retrieving orders by customer
+    public function getOrdersByCustomer($customerId, $limit = 50, $offset = 0) {
+        $stmt = $this->db->prepare(
+            "SELECT o.*,
+                    (SELECT COUNT(*) FROM samples WHERE order_id = o.id) as sample_count
+             FROM orders o
+             WHERE o.customer_id = ?
+             ORDER BY o.created_at DESC
+             LIMIT ? OFFSET ?"
+        );
+        $stmt->execute([$customerId, $limit, $offset]);
+        return $stmt->fetchAll();
     }
 
     public function getPendingOrders() {

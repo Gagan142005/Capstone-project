@@ -44,6 +44,21 @@ class Email {
     }
 
     /**
+     * Send email verification PIN
+     */
+    public function sendVerificationPin($email, $name, $pin) {
+        $subject = "Your Verification Code - " . APP_NAME;
+
+        $body = $this->getEmailTemplate('verification_pin', [
+            'name' => $name,
+            'pin' => $pin,
+            'app_name' => APP_NAME
+        ]);
+
+        return $this->send($email, $subject, $body);
+    }
+
+    /**
      * Send order rejection notification to customer
      */
     public function sendOrderRejectionNotification($customerEmail, $customerName, $orderNumber, $reason) {
@@ -134,6 +149,40 @@ class Email {
             </div>
             <p>If you believe this was in error or would like to discuss this further, please contact our support team.</p>
             <p>Thank you for your understanding.</p>
+        </div>
+        <div class="footer">
+            <p>This is an automated message from {{app_name}}. Please do not reply directly to this email.</p>
+        </div>
+    </div>
+</body>
+</html>',
+
+            'verification_pin' => '
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #fff; padding: 30px; border: 1px solid #ddd; border-top: none; }
+        .footer { background: #f8f9fa; padding: 15px; text-align: center; font-size: 12px; color: #666; border: 1px solid #ddd; border-top: none; border-radius: 0 0 10px 10px; }
+        .pin-code { font-size: 36px; font-weight: bold; color: #667eea; letter-spacing: 8px; text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{app_name}}</h1>
+        </div>
+        <div class="content">
+            <h2>Email Verification</h2>
+            <p>Dear {{name}},</p>
+            <p>Thank you for registering with {{app_name}}. Please use the following PIN to verify your email address:</p>
+            <div class="pin-code">{{pin}}</div>
+            <p>This code will expire in 10 minutes.</p>
+            <p>If you did not request this verification, please ignore this email.</p>
         </div>
         <div class="footer">
             <p>This is an automated message from {{app_name}}. Please do not reply directly to this email.</p>
