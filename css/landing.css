@@ -27,8 +27,41 @@
     padding: 15px 0;
 }
 
-.landing-header.scrolled a {
-   color: #000;
+/* Scrolled header - logo turns purple */
+.landing-header.scrolled .landing-logo a {
+    color: #667eea;
+}
+
+/* Scrolled header - nav turns dark */
+.landing-header.scrolled .landing-nav a {
+    color: #333;
+}
+
+.landing-header.scrolled .landing-nav a:hover {
+    color: #667eea;
+}
+
+/* Scrolled header - outline button turns purple */
+.landing-header.scrolled .btn-outline-white {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.landing-header.scrolled .btn-outline-white:hover {
+    background: #667eea;
+    color: white;
+}
+
+/* Scrolled header - white button becomes purple gradient */
+.landing-header.scrolled .btn-white {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: white;
+}
+
+.landing-header.scrolled .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
 .landing-header-content {
@@ -305,6 +338,33 @@
     margin-bottom: 60px;
 }
 
+/* Hero CTA button - make it stand out */
+.hero-actions .btn-primary {
+    background: white;
+    color: #667eea;
+    border: 2px solid white;
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-actions .btn-primary:hover {
+    background: #f0f0ff;
+    border-color: #f0f0ff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.hero-actions .btn-ghost {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+.hero-actions .btn-ghost:hover {
+    border-color: white;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
 .hero-stats {
     display: flex;
     justify-content: center;
@@ -517,16 +577,17 @@
 .feature-icon {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .feature-icon svg {
-    color: #667eea;
+    color: white;
 }
 
 .feature-card h3 {
