@@ -39,6 +39,7 @@ if ($user->isLoggedIn()) {
             </div>
             <nav class="landing-nav">
                 <a href="#features">Features</a>
+                <a href="#services">Services</a>
                 <a href="#how-it-works">How It Works</a>
                 <a href="#about">About</a>
             </nav>
@@ -58,6 +59,7 @@ if ($user->isLoggedIn()) {
     <div class="mobile-menu" id="mobileMenu">
         <nav class="mobile-nav">
             <a href="#features">Features</a>
+            <a href="#services">Services</a>
             <a href="#how-it-works">How It Works</a>
             <a href="#about">About</a>
             <a href="login.php" class="btn btn-outline">Log In</a>
@@ -274,6 +276,154 @@ if ($user->isLoggedIn()) {
         </div>
     </section>
 
+    <!-- Services/Products Section -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Services</span>
+                <h2 class="section-title">Laboratory Analysis Services</h2>
+                <p class="section-subtitle">Professional analysis for ore and liquid samples using state-of-the-art equipment and methodologies.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-image ore-sample"></div>
+                    <div class="service-content">
+                        <span class="service-category">Ore Analysis</span>
+                        <h3>Gold Ore Analysis</h3>
+                        <p>Comprehensive gold content analysis using fire assay and atomic absorption spectroscopy methods.</p>
+                        <ul class="service-features">
+                            <li>Fire Assay Testing</li>
+                            <li>Atomic Absorption</li>
+                            <li>Detailed Reports</li>
+                        </ul>
+                        <div class="service-meta">
+                            <span class="processing-time">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                3-5 Days
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image copper-sample"></div>
+                    <div class="service-content">
+                        <span class="service-category">Ore Analysis</span>
+                        <h3>Copper Ore Analysis</h3>
+                        <p>Accurate copper grade determination and mineral composition analysis for mining operations.</p>
+                        <ul class="service-features">
+                            <li>Grade Analysis</li>
+                            <li>Mineral Composition</li>
+                            <li>Quality Certification</li>
+                        </ul>
+                        <div class="service-meta">
+                            <span class="processing-time">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                2-4 Days
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image iron-sample"></div>
+                    <div class="service-content">
+                        <span class="service-category">Ore Analysis</span>
+                        <h3>Iron Ore Analysis</h3>
+                        <p>Complete iron ore testing including Fe content, silica, alumina, and trace element analysis.</p>
+                        <ul class="service-features">
+                            <li>Fe Content Testing</li>
+                            <li>Impurity Analysis</li>
+                            <li>Compliance Reports</li>
+                        </ul>
+                        <div class="service-meta">
+                            <span class="processing-time">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                2-3 Days
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image water-sample"></div>
+                    <div class="service-content">
+                        <span class="service-category">Liquid Analysis</span>
+                        <h3>Water Quality Testing</h3>
+                        <p>Comprehensive water analysis for industrial, environmental, and drinking water compliance.</p>
+                        <ul class="service-features">
+                            <li>Chemical Analysis</li>
+                            <li>Contaminant Testing</li>
+                            <li>EPA Standards</li>
+                        </ul>
+                        <div class="service-meta">
+                            <span class="processing-time">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                1-2 Days
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image oil-sample"></div>
+                    <div class="service-content">
+                        <span class="service-category">Liquid Analysis</span>
+                        <h3>Oil & Fuel Analysis</h3>
+                        <p>Testing for petroleum products including viscosity, flash point, and contamination levels.</p>
+                        <ul class="service-features">
+                            <li>Viscosity Testing</li>
+                            <li>Contamination Check</li>
+                            <li>Quality Grading</li>
+                        </ul>
+                        <div class="service-meta">
+                            <span class="processing-time">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                2-3 Days
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image chemical-sample"></div>
+                    <div class="service-content">
+                        <span class="service-category">Liquid Analysis</span>
+                        <h3>Chemical Solutions</h3>
+                        <p>Analysis of chemical solutions for concentration, purity, and composition verification.</p>
+                        <ul class="service-features">
+                            <li>Concentration Testing</li>
+                            <li>Purity Analysis</li>
+                            <li>Batch Verification</li>
+                        </ul>
+                        <div class="service-meta">
+                            <span class="processing-time">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                1-3 Days
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="services-cta">
+                <a href="catalog.php" class="btn btn-primary btn-large">View Full Catalog</a>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section class="about-section" id="about">
         <div class="container">
@@ -364,7 +514,8 @@ if ($user->isLoggedIn()) {
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="#features">Features</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="catalog.php">Product Catalog</a></li>
                         <li><a href="#about">About</a></li>
                     </ul>
                 </div>
