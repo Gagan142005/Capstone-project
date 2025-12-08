@@ -132,15 +132,15 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 
 -- Insert default admin user (password: admin123)
 INSERT INTO users (full_name, email, password_hash, role) VALUES
-('System Administrator', 'admin@globentech.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'administrator');
+('System Administrator', 'admin@globentech.com', '$2y$12$ispYnU5LnCx0XMyJ8x2aiOC6YteIq8ZqOFyVzuvp1vrnamajyv07m', 'administrator');
 
 -- Insert default technician (password: tech123)
 INSERT INTO users (full_name, email, password_hash, role) VALUES
-('Lab Technician', 'tech@globentech.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'technician');
+('Lab Technician', 'tech@globentech.com', '$2y$12$p8DMkw4Jo6j.9vgKiwfV5u25FE2VvWf9fYnHEd/67YL57cQBkZSoS', 'technician');
 
 -- Insert default customer (password: customer123)
 INSERT INTO users (full_name, email, password_hash, role, company_name) VALUES
-('Test Customer', 'customer@globentech.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'customer', 'Test Company Inc.');
+('Test Customer', 'customer@globentech.com', '$2y$12$hBiceBSwHp9Rcqk5mh1k0uPjWflxDNEn/JMOUYzVekFGW4pKTSMQu', 'customer', 'Test Company Inc.');
 
 -- Insert sample equipment
 INSERT INTO equipment (name, equipment_type, processing_time_per_sample, warmup_time, break_interval, break_duration, daily_capacity) VALUES
