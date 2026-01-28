@@ -4,6 +4,7 @@ require_once 'classes/User.php';
 require_once 'classes/Order.php';
 require_once 'classes/Equipment.php';
 require_once 'classes/Sample.php';
+require_once 'classes/Queue.php';
 require_once 'classes/Email.php';
 
 $user = new User();
@@ -20,6 +21,8 @@ $userId = $_SESSION['user_id'];
 // Initialize classes
 $order = new Order();
 $equipment = new Equipment();
+$queue = new Queue();
+$sample = new Sample();
 $email = new Email();
 
 // Handle approve/reject actions
@@ -27,13 +30,38 @@ $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['approve_order'])) {
         $orderId = intval($_POST['order_id']);
-        // Get order with customer info before approving
         $orderData = $order->getOrderWithCustomer($orderId);
 
         if ($order->approveOrder($orderId, $userId)) {
             $message = 'Order approved successfully';
 
-            // Send email notification to customer
+            // Auto-schedule: add to queue, set equipment, estimated completion
+            $samples = $sample->getSamplesByOrder($orderId);
+            $equipmentList = $equipment->getAllEquipment(true);
+            $priority = $orderData['priority'] ?? 'standard';
+
+            if (!empty($equipmentList)) {
+                $eq = $equipmentList[0];
+                $eqId = (int) $eq['id'];
+                $processingPer = (int) $eq['processing_time_per_sample'];
+                $prepMins = 0;
+                foreach ($samples as $s) {
+                    $prepMins += (int) ($s['preparation_time'] ?? 0);
+                }
+                $testingMins = count($samples) * ($processingPer ?: 5);
+                $durationMins = $prepMins + $testingMins;
+
+                $lastEnd = $queue->getLastScheduledEnd($eqId);
+                $base = $lastEnd ? strtotime($lastEnd) : time();
+                $start = date('Y-m-d H:i:s', $base);
+                $end = date('Y-m-d H:i:s', $base + $durationMins * 60);
+
+                $queue->addToQueueScheduled($orderId, $eqId, $priority, $start, $end);
+                $order->updateOrderStatus($orderId, 'in_queue');
+                $order->updateEstimatedCompletion($orderId, $end);
+                $message .= ' - Queued and scheduled';
+            }
+
             if ($orderData && !empty($orderData['customer_email'])) {
                 $emailSent = $email->sendOrderApprovalNotification(
                     $orderData['customer_email'],

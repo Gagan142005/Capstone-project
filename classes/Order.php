@@ -75,7 +75,8 @@ class Order {
     }
 
     public function updateEstimatedCompletion($orderId, $estimatedCompletion) {
-        // Method signature for updating estimated completion time
+        $stmt = $this->db->prepare("UPDATE orders SET estimated_completion = ? WHERE id = ?");
+        return $stmt->execute([$estimatedCompletion, $orderId]);
     }
 
     // Order Retrieval Methods
