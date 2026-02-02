@@ -2,6 +2,8 @@
     <div class="header-content">
         <div class="logo">
             <a href="dashboard.php"><?php echo APP_NAME; ?></a>
+            li><a href="Admin-orderhistory.php">My Order History</a></li>
+            li><a href="Customer-orderhistory.php">My Order History</a></li>
         </div>
 
         <?php
@@ -13,20 +15,29 @@
         <nav class="main-nav">
             <?php if (isset($_SESSION['user_role'])): ?>
                 <?php if ($_SESSION['user_role'] === 'customer'): ?>
-                    <a href="dashboard.php" class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
-                    <a href="my-orders.php" class="<?php echo $currentPage === 'my-orders.php' ? 'active' : ''; ?>">My Orders</a>
-                    <a href="create-order.php" class="<?php echo $currentPage === 'create-order.php' ? 'active' : ''; ?>">New Order</a>
+                    <a href="dashboard.php"
+                        class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
+                    <a href="my-orders.php" class="<?php echo $currentPage === 'my-orders.php' ? 'active' : ''; ?>">My
+                        Orders</a>
+                    <a href="create-order.php" class="<?php echo $currentPage === 'create-order.php' ? 'active' : ''; ?>">New
+                        Order</a>
                 <?php elseif ($_SESSION['user_role'] === 'technician'): ?>
-                    <a href="dashboard.php" class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
+                    <a href="dashboard.php"
+                        class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
                     <a href="#">Samples</a>
                     <a href="#">Equipment</a>
                     <a href="#">Queue</a>
                 <?php elseif ($_SESSION['user_role'] === 'administrator'): ?>
-                    <a href="dashboard.php" class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
-                    <a href="admin.php?tab=approvals" class="<?php echo $currentPage === 'admin.php' && $currentTab === 'approvals' ? 'active' : ''; ?>">Approvals</a>
-                    <a href="admin.php?tab=users" class="<?php echo $currentPage === 'admin.php' && $currentTab === 'users' ? 'active' : ''; ?>">Users</a>
-                    <a href="admin.php?tab=equipment" class="<?php echo $currentPage === 'admin.php' && $currentTab === 'equipment' ? 'active' : ''; ?>">Equipment</a>
-                    <a href="admin.php?tab=reports" class="<?php echo $currentPage === 'admin.php' && $currentTab === 'reports' ? 'active' : ''; ?>">Reports</a>
+                    <a href="dashboard.php"
+                        class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">Dashboard</a>
+                    <a href="admin.php?tab=approvals"
+                        class="<?php echo $currentPage === 'admin.php' && $currentTab === 'approvals' ? 'active' : ''; ?>">Approvals</a>
+                    <a href="admin.php?tab=users"
+                        class="<?php echo $currentPage === 'admin.php' && $currentTab === 'users' ? 'active' : ''; ?>">Users</a>
+                    <a href="admin.php?tab=equipment"
+                        class="<?php echo $currentPage === 'admin.php' && $currentTab === 'equipment' ? 'active' : ''; ?>">Equipment</a>
+                    <a href="admin.php?tab=reports"
+                        class="<?php echo $currentPage === 'admin.php' && $currentTab === 'reports' ? 'active' : ''; ?>">Reports</a>
                 <?php endif; ?>
             <?php endif; ?>
         </nav>
