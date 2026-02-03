@@ -4,6 +4,8 @@ require_once 'classes/User.php';
 require_once 'classes/Order.php';
 require_once 'classes/Queue.php';
 require_once 'classes/Equipment.php';
+require_once 'classes/Customer-orderhistory.php' . '';
+require_once 'classes/Admin-orderhistory.php';
 
 $user = new User();
 
@@ -24,12 +26,14 @@ $equipment = new Equipment();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - <?php echo APP_NAME; ?></title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <?php include 'includes/header.php'; ?>
 
@@ -104,33 +108,39 @@ $equipment = new Equipment();
                                 </thead>
                                 <tbody>
                                     <?php foreach (array_slice($customerOrders, 0, 5) as $co): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($co['order_number']); ?></td>
-                                        <td><?php echo date('M d, Y', strtotime($co['created_at'])); ?></td>
-                                        <td>
-                                            <span class="priority-badge priority-<?php echo $co['priority']; ?>">
-                                                <?php echo ucfirst($co['priority']); ?>
-                                            </span>
-                                        </td>
-                                        <td><?php echo $co['sample_count']; ?></td>
-                                        <td>
-                                            <span class="priority-badge priority-<?php echo $co['status'] === 'submitted' ? 'priority' : ($co['status'] === 'completed' ? 'standard' : 'standard'); ?>" style="<?php
-                                                if ($co['status'] === 'approved') echo 'background: #d1ecf1; color: #0c5460;';
-                                                elseif ($co['status'] === 'processing') echo 'background: #e7e3ff; color: #5a4fcf;';
-                                                elseif ($co['status'] === 'completed') echo 'background: #d4edda; color: #155724;';
-                                                elseif ($co['status'] === 'rejected') echo 'background: #f8d7da; color: #721c24;';
-                                            ?>">
-                                                <?php echo ucfirst($co['status']); ?>
-                                            </span>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($co['order_number']); ?></td>
+                                            <td><?php echo date('M d, Y', strtotime($co['created_at'])); ?></td>
+                                            <td>
+                                                <span class="priority-badge priority-<?php echo $co['priority']; ?>">
+                                                        <?php echo ucfirst($co['priority']); ?>
+                                                </span>
+                                            </td>
+                                            <td><?php echo $co['sample_count']; ?></td>
+                                            <td>
+                                                <span
+                                                    class="priority-badge priority-<?php echo $co['status'] === 'submitted' ? 'priority' : ($co['status'] === 'completed' ? 'standard' : 'standard'); ?>"
+                                                    style="<?php
+                                                    if ($co['status'] === 'approved')
+                                                        echo 'background: #d1ecf1; color: #0c5460;';
+                                                    elseif ($co['status'] === 'processing')
+                                                        echo 'background: #e7e3ff; color: #5a4fcf;';
+                                                    elseif ($co['status'] === 'completed')
+                                                        echo 'background: #d4edda; color: #155724;';
+                                                    elseif ($co['status'] === 'rejected')
+                                                        echo 'background: #f8d7da; color: #721c24;';
+                                                    ?>">
+                                                        <?php echo ucfirst($co['status']); ?>
+                                                </span>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                             <?php if (count($customerOrders) > 5): ?>
-                            <div style="margin-top: 15px;">
-                                <a href="my-orders.php" class="btn btn-secondary">View All Orders</a>
-                            </div>
+                                <div style="margin-top: 15px;">
+                                    <a href="my-orders.php" class="btn btn-secondary">View All Orders</a>
+                                </div>
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
@@ -232,18 +242,18 @@ $equipment = new Equipment();
                                 </thead>
                                 <tbody>
                                     <?php foreach ($pendingOrders as $po): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($po['order_number']); ?></td>
-                                        <td><?php echo htmlspecialchars($po['customer_name']); ?></td>
-                                        <td><?php echo htmlspecialchars($po['company_name'] ?? '-'); ?></td>
-                                        <td><?php echo date('Y-m-d H:i', strtotime($po['created_at'])); ?></td>
-                                        <td>
-                                            <span class="priority-badge priority-<?php echo $po['priority']; ?>">
-                                                <?php echo ucfirst($po['priority']); ?>
-                                            </span>
-                                        </td>
-                                        <td><?php echo $po['sample_count']; ?></td>
-                                    </tr>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($po['order_number']); ?></td>
+                                            <td><?php echo htmlspecialchars($po['customer_name']); ?></td>
+                                            <td><?php echo htmlspecialchars($po['company_name'] ?? '-'); ?></td>
+                                            <td><?php echo date('Y-m-d H:i', strtotime($po['created_at'])); ?></td>
+                                            <td>
+                                                <span class="priority-badge priority-<?php echo $po['priority']; ?>">
+                                                        <?php echo ucfirst($po['priority']); ?>
+                                                </span>
+                                            </td>
+                                            <td><?php echo $po['sample_count']; ?></td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -268,4 +278,5 @@ $equipment = new Equipment();
     <?php include 'includes/footer.php'; ?>
     <script src="js/main.js"></script>
 </body>
+
 </html>
