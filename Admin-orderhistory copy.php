@@ -1,5 +1,5 @@
 <?php
-// Frontend UI only – admin view
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

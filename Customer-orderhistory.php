@@ -1,5 +1,5 @@
 <?php
-// Frontend UI only – no backend logic
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
