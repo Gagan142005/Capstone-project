@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
   <?php include 'includes/header.php'; ?>
   <?php include 'includes/sidebar.php'; ?>
 
@@ -29,7 +28,6 @@
 
       <input type="text" placeholder="Search Order #">
     </div>
-
     <table class="data-table">
       <thead>
         <tr>
@@ -58,9 +56,7 @@
       </tbody>
     </table>
   </div>
-
   <?php include 'includes/footer.php'; ?>
-
 </body>
 
 </html>

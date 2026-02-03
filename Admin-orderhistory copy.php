@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
   <?php include 'includes/header.php'; ?>
   <?php include 'includes/sidebar.php'; ?>
 
@@ -68,9 +67,7 @@
       </tbody>
     </table>
   </div>
-
   <?php include 'includes/footer.php'; ?>
-
 </body>
 
 </html>
