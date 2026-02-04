@@ -214,7 +214,7 @@ $equipment = new Equipment();
                 <div class="dashboard-card">
                     <h2>Order History</h2>
                     <p>View all customer orders and order status history</p>
-                    <a href="#" class="btn btn-secondary">View All Orders</a>
+                    <a href="admin.php?tab=orders" class="btn btn-secondary">View All Orders</a>
                 </div>
 
                 <div class="dashboard-card">
