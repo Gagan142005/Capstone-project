@@ -75,6 +75,7 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,6 +83,7 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
 </head>
+
 <body>
     <?php include 'includes/header.php'; ?>
 
@@ -92,11 +94,11 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                 <section class="admin-section">
                     <h1>Pending Approvals</h1>
                     <p class="section-desc">Review and approve or reject submitted orders.</p>
-                    
+
                     <?php if ($message): ?>
                         <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
                     <?php endif; ?>
-                    
+
                     <div class="admin-table-container">
                         <table class="admin-table">
                             <thead>
@@ -111,38 +113,41 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
+                                <?php
                                 $pendingOrders = $order->getPendingOrders();
-                                if (empty($pendingOrders)): 
-                                ?>
-                                <tr>
-                                    <td colspan="7" class="empty-state">No pending orders</td>
-                                </tr>
+                                if (empty($pendingOrders)):
+                                    ?>
+                                    <tr>
+                                        <td colspan="7" class="empty-state">No pending orders</td>
+                                    </tr>
                                 <?php else: ?>
                                     <?php foreach ($pendingOrders as $po): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($po['order_number']); ?></td>
-                                        <td><?php echo htmlspecialchars($po['customer_name']); ?></td>
-                                        <td><?php echo htmlspecialchars($po['company_name'] ?? '-'); ?></td>
-                                        <td><?php echo date('Y-m-d H:i', strtotime($po['created_at'])); ?></td>
-                                        <td>
-                                            <span class="badge badge-<?php echo $po['priority']; ?>">
-                                                <?php echo ucfirst($po['priority']); ?>
-                                            </span>
-                                        </td>
-                                        <td><?php echo $po['sample_count']; ?></td>
-                                        <td class="actions">
-                                            <form method="POST" style="display:inline;">
-                                                <input type="hidden" name="order_id" value="<?php echo $po['id']; ?>">
-                                                <button type="submit" name="approve_order" class="btn btn-small btn-success">Approve</button>
-                                            </form>
-                                            <form method="POST" style="display:inline;">
-                                                <input type="hidden" name="order_id" value="<?php echo $po['id']; ?>">
-                                                <input type="hidden" name="rejection_reason" value="Order rejected by administrator">
-                                                <button type="submit" name="reject_order" class="btn btn-small btn-danger">Reject</button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($po['order_number']); ?></td>
+                                            <td><?php echo htmlspecialchars($po['customer_name']); ?></td>
+                                            <td><?php echo htmlspecialchars($po['company_name'] ?? '-'); ?></td>
+                                            <td><?php echo date('Y-m-d H:i', strtotime($po['created_at'])); ?></td>
+                                            <td>
+                                                <span class="badge badge-<?php echo $po['priority']; ?>">
+                                                    <?php echo ucfirst($po['priority']); ?>
+                                                </span>
+                                            </td>
+                                            <td><?php echo $po['sample_count']; ?></td>
+                                            <td class="actions">
+                                                <form method="POST" style="display:inline;">
+                                                    <input type="hidden" name="order_id" value="<?php echo $po['id']; ?>">
+                                                    <button type="submit" name="approve_order"
+                                                        class="btn btn-small btn-success">Approve</button>
+                                                </form>
+                                                <form method="POST" style="display:inline;">
+                                                    <input type="hidden" name="order_id" value="<?php echo $po['id']; ?>">
+                                                    <input type="hidden" name="rejection_reason"
+                                                        value="Order rejected by administrator">
+                                                    <button type="submit" name="reject_order"
+                                                        class="btn btn-small btn-danger">Reject</button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tbody>
@@ -155,7 +160,7 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                 <section class="admin-section">
                     <h1>Manage Equipment</h1>
                     <p class="section-desc">Configure equipment settings, processing times, and schedules.</p>
-                    
+
                     <div class="admin-actions-bar">
                         <button class="btn btn-primary">Add Equipment</button>
                     </div>
@@ -178,29 +183,30 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                                 <?php
                                 $equipmentList = $equipment->getAllEquipment();
                                 if (empty($equipmentList)):
-                                ?>
-                                <tr>
-                                    <td colspan="8" class="empty-state">No equipment configured</td>
-                                </tr>
+                                    ?>
+                                    <tr>
+                                        <td colspan="8" class="empty-state">No equipment configured</td>
+                                    </tr>
                                 <?php else: ?>
                                     <?php foreach ($equipmentList as $eq): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($eq['name']); ?></td>
-                                        <td><?php echo htmlspecialchars($eq['equipment_type']); ?></td>
-                                        <td><?php echo $eq['processing_time_per_sample']; ?> min/sample</td>
-                                        <td><?php echo $eq['warmup_time']; ?> min</td>
-                                        <td><?php echo $eq['break_interval']; ?> samples</td>
-                                        <td><?php echo $eq['daily_capacity']; ?> samples</td>
-                                        <td>
-                                            <span class="badge <?php echo $eq['is_available'] ? 'badge-success' : 'badge-danger'; ?>">
-                                                <?php echo $eq['is_available'] ? 'Available' : 'Unavailable'; ?>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <button class="btn btn-small btn-secondary">Edit</button>
-                                            <button class="btn btn-small btn-warning">Log Delay</button>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($eq['name']); ?></td>
+                                            <td><?php echo htmlspecialchars($eq['equipment_type']); ?></td>
+                                            <td><?php echo $eq['processing_time_per_sample']; ?> min/sample</td>
+                                            <td><?php echo $eq['warmup_time']; ?> min</td>
+                                            <td><?php echo $eq['break_interval']; ?> samples</td>
+                                            <td><?php echo $eq['daily_capacity']; ?> samples</td>
+                                            <td>
+                                                <span
+                                                    class="badge <?php echo $eq['is_available'] ? 'badge-success' : 'badge-danger'; ?>">
+                                                    <?php echo $eq['is_available'] ? 'Available' : 'Unavailable'; ?>
+                                                </span>
+                                            </td>
+                                            <td class="actions">
+                                                <button class="btn btn-small btn-secondary">Edit</button>
+                                                <button class="btn btn-small btn-warning">Log Delay</button>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tbody>
@@ -213,7 +219,7 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                 <section class="admin-section">
                     <h1>Manage Samples</h1>
                     <p class="section-desc">View and manage sample processing status.</p>
-                    
+
                     <div class="filter-bar">
                         <select class="form-control">
                             <option value="">All Statuses</option>
@@ -259,7 +265,7 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                 <section class="admin-section">
                     <h1>Manage Users</h1>
                     <p class="section-desc">Create, modify, and manage user accounts and permissions.</p>
-                    
+
                     <div class="admin-actions-bar">
                         <button class="btn btn-primary">Add User</button>
                         <button class="btn btn-secondary">Import CSV</button>
@@ -309,7 +315,7 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                 <section class="admin-section">
                     <h1>Performance Reports</h1>
                     <p class="section-desc">Generate and view reports on orders, revenue, and system performance.</p>
-                    
+
                     <div class="report-cards">
                         <div class="report-card">
                             <h3>Orders Report</h3>
@@ -350,7 +356,8 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                                 <select class="form-control">
                                     <option value="">All Equipment</option>
                                     <?php foreach ($equipment->getAllEquipment() as $eq): ?>
-                                    <option value="<?php echo $eq['id']; ?>"><?php echo htmlspecialchars($eq['name']); ?></option>
+                                        <option value="<?php echo $eq['id']; ?>"><?php echo htmlspecialchars($eq['name']); ?>
+                                        </option>
                                     <?php endforeach; ?>
                                 </select>
                                 <button class="btn btn-primary">Generate</button>
@@ -377,11 +384,82 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                     </div>
                 </section>
 
+            <?php elseif ($currentTab === 'order-history'): ?>
+                <!-- Order History Section -->
+                <section class="admin-section">
+                    <h1>Order History</h1>
+                    <p class="section-desc">
+                        View all submitted, approved, rejected, and completed orders across the system.
+                    </p>
+
+                    <div class="filter-bar">
+                        <input type="text" class="form-control" placeholder="Search by order # or customer name">
+                        <select class="form-control">
+                            <option value="">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <select class="form-control">
+                            <option value="">All Priorities</option>
+                            <option value="standard">Standard</option>
+                            <option value="high">High</option>
+                        </select>
+                        <button class="btn btn-secondary">Filter</button>
+                    </div>
+
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order #</th>
+                                    <th>Customer</th>
+                                    <th>Company</th>
+                                    <th>Submitted</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Samples</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- UI-only placeholder rows -->
+                                <tr>
+                                    <td>ORD-1023</td>
+                                    <td>John Doe</td>
+                                    <td>Acme Corp</td>
+                                    <td>2026-02-01</td>
+                                    <td>
+                                        <span class="badge badge-high">High</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success">Approved</span>
+                                    </td>
+                                    <td>5</td>
+                                    <td class="actions">
+                                        <button class="btn btn-small btn-secondary">View</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="8" class="empty-state">
+                                        More order records will appear here.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             <?php endif; ?>
         </main>
     </div>
 
+
+
+
     <?php include 'includes/footer.php'; ?>
     <script src="js/main.js"></script>
 </body>
+
 </html>
