@@ -113,7 +113,7 @@ $equipment = new Equipment();
                                             <td><?php echo date('M d, Y', strtotime($co['created_at'])); ?></td>
                                             <td>
                                                 <span class="priority-badge priority-<?php echo $co['priority']; ?>">
-                                                        <?php echo ucfirst($co['priority']); ?>
+                                                    <?php echo ucfirst($co['priority']); ?>
                                                 </span>
                                             </td>
                                             <td><?php echo $co['sample_count']; ?></td>
@@ -130,7 +130,7 @@ $equipment = new Equipment();
                                                     elseif ($co['status'] === 'rejected')
                                                         echo 'background: #f8d7da; color: #721c24;';
                                                     ?>">
-                                                        <?php echo ucfirst($co['status']); ?>
+                                                    <?php echo ucfirst($co['status']); ?>
                                                 </span>
                                             </td>
                                         </tr>
@@ -212,6 +212,12 @@ $equipment = new Equipment();
                 </div>
 
                 <div class="dashboard-card">
+                    <h2>Order History</h2>
+                    <p>View all customer orders and order status history</p>
+                    <a href="#" class="btn btn-secondary">View All Orders</a>
+                </div>
+
+                <div class="dashboard-card">
                     <h2>Equipment Management</h2>
                     <p>Configure equipment settings and schedules</p>
                     <a href="#" class="btn btn-secondary">Manage Equipment</a>
@@ -249,7 +255,7 @@ $equipment = new Equipment();
                                             <td><?php echo date('Y-m-d H:i', strtotime($po['created_at'])); ?></td>
                                             <td>
                                                 <span class="priority-badge priority-<?php echo $po['priority']; ?>">
-                                                        <?php echo ucfirst($po['priority']); ?>
+                                                    <?php echo ucfirst($po['priority']); ?>
                                                 </span>
                                             </td>
                                             <td><?php echo $po['sample_count']; ?></td>
