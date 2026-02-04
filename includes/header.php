@@ -2,8 +2,7 @@
     <div class="header-content">
         <div class="logo">
             <a href="dashboard.php"><?php echo APP_NAME; ?></a>
-            li><a href="Admin-orderhistory.php">My Order History</a></li>
-            li><a href="Customer-orderhistory.php">My Order History</a></li>
+
         </div>
 
         <?php
@@ -38,6 +37,8 @@
                         class="<?php echo $currentPage === 'admin.php' && $currentTab === 'equipment' ? 'active' : ''; ?>">Equipment</a>
                     <a href="admin.php?tab=reports"
                         class="<?php echo $currentPage === 'admin.php' && $currentTab === 'reports' ? 'active' : ''; ?>">Reports</a>
+                    <a href="admin.php?tab=order-history"
+                        class="<?php echo $currentPage === 'admin.php' && $currentTab === 'order-history' ? 'active' : ''; ?>">Order-History</a>
                 <?php endif; ?>
             <?php endif; ?>
         </nav>
