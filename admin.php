@@ -6,6 +6,7 @@ require_once 'classes/Equipment.php';
 require_once 'classes/Sample.php';
 require_once 'classes/Email.php';
 
+
 $user = new User();
 
 // Check if user is logged in and is administrator
@@ -384,73 +385,8 @@ $currentTab = isset($_GET['tab']) ? $_GET['tab'] : 'approvals';
                     </div>
                 </section>
 
-            <?php elseif ($currentTab === 'order-history'): ?>
-                <!-- Order History Section -->
-                <section class="admin-section">
-                    <h1>Order History</h1>
-                    <p class="section-desc">
-                        View all submitted, approved, rejected, and completed orders across the system.
-                    </p>
 
-                    <div class="filter-bar">
-                        <input type="text" class="form-control" placeholder="Search by order # or customer name">
-                        <select class="form-control">
-                            <option value="">All Statuses</option>
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                        <select class="form-control">
-                            <option value="">All Priorities</option>
-                            <option value="standard">Standard</option>
-                            <option value="high">High</option>
-                        </select>
-                        <button class="btn btn-secondary">Filter</button>
-                    </div>
 
-                    <div class="admin-table-container">
-                        <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>Order #</th>
-                                    <th>Customer</th>
-                                    <th>Company</th>
-                                    <th>Submitted</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
-                                    <th>Samples</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- UI-only placeholder rows -->
-                                <tr>
-                                    <td>ORD-1023</td>
-                                    <td>John Doe</td>
-                                    <td>Acme Corp</td>
-                                    <td>2026-02-01</td>
-                                    <td>
-                                        <span class="badge badge-high">High</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-success">Approved</span>
-                                    </td>
-                                    <td>5</td>
-                                    <td class="actions">
-                                        <button class="btn btn-small btn-secondary">View</button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="8" class="empty-state">
-                                        More order records will appear here.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
             <?php endif; ?>
         </main>
     </div>
