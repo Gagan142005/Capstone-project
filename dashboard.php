@@ -4,8 +4,7 @@ require_once 'classes/User.php';
 require_once 'classes/Order.php';
 require_once 'classes/Queue.php';
 require_once 'classes/Equipment.php';
-require_once 'classes/Customer-orderhistory.php' . '';
-require_once 'classes/Admin-orderhistory.php';
+
 
 $user = new User();
 
